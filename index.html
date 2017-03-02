@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script>
+function fireAction() {
+    event.preventDefault();  // Stop the form from causing a page refresh
+    var query = $("#query").val();
+    console.log(query);
+    $.get("/search", { q: query},
+    function(data) {
+        //$('#results').html(data);
+        //$('#results').html('<object data='+data+'/>');
+        $('#results').html('<a href=' + data + ' target="_blank">' + data + '</a>');
+    });
+
+    return true;
+}
+</script>
+</head>
+
+<body>
+<div id="main">
+
+<form id="searchWF" action="/search">
+  Ask Wells Fargo:<br>
+  <input type="text" id="query" name="q" value=""/>
+  <input type="submit" id="button" value="Submit" onclick="fireAction();"/>
+</form>
+<br/>
+</div>
+<div id="results">
+</div>
+</body>
+</html>
