@@ -45,3 +45,6 @@ messages/node_modules
 
 # OS X folder attributes
 .DS_Store
+
+# Local configuration
+config/local.yaml

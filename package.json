@@ -1,9 +1,10 @@
 {
-  "name": "google-ai",
+  "name": "google-ml",
   "version": "0.0.1",
-  "description": "Test driving Google AI apis.",
+  "description": "Test driving Google ML apis.",
   "main": "",
   "dependencies": {
+    "googleapis": "*",
     "express": "4.14.1",
     "config": "1.25.1",
     "request": "2.79.0",

@@ -1,13 +1,14 @@
 var request = require('request');
+var config = require('config');
 
 var queryString = "";
-var cx = "";
-var key = "";
+const CX   = config.get('CustomSearchCX');
+const KEY  = config.get('APIKey');
 
 var parametersObj = { 
   q: queryString,
-  cx: cx,
-  key: key,
+  cx: CX,
+  key: KEY,
 };
 
 request.get({

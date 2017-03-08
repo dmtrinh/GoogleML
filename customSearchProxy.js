@@ -1,12 +1,15 @@
+var google = require('googleapis');
+
 var express = require('express');
 var request = require('request');
+var config = require('config');
 var path = require('path');
 
 var app = express();
 
 const PORT = 8080;
-const CX   = "";
-const KEY  = "";
+const CX   = config.get('CustomSearchCX');
+const KEY  = config.get('APIKey');
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
@@ -33,7 +36,7 @@ app.get('/search', function(req, res) {
     }
     else {
       var payload = JSON.parse(body);
-      //console.log('SUCCESS!', payload);
+
       console.log('SUCCESS - Invocation to CustomSearch');
       console.log('----');
 
@@ -41,7 +44,7 @@ app.get('/search', function(req, res) {
       if ( items ) {
           var link = items[0].link;
           //res.redirect(link);
-          res.set({'X-Frame-Options': 'ALL'});
+          //res.set({'X-Frame-Options': 'ALL'});
           res.send(link);
       }
     }
