@@ -1,11 +1,9 @@
 # Create an API key @ https://console.cloud.google.com/apis/credentials
 APIKey:
 
-# JSON Web Tokens (Service Tokens JSON file) from Service Accounts created
-# in Google Developers Console
+# JSON Web Tokens (Service Tokens JSON file) from Service Accounts created in Google Developers Console
 JWT:
 
-# Create a new search engine @ https://cse.google.com/cse/all and put
-# Search engine ID here.
+# Create a new search engine @ https://cse.google.com/cse/all and put Search engine ID here.
 CustomSearchCX:
 

@@ -16,8 +16,6 @@ var jwtClient = new google.auth.JWT(
   null
 );
 
-
-// Specify Experiment configuration
 var requestBody = {
   'document': { 
       'type': 'PLAIN_TEXT',
