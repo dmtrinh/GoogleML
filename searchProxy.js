@@ -28,20 +28,10 @@ app.get('/', function(req, res) {
 app.get('/search', function(req, res) {
   var query = req.query.q;
 
-  var parametersObj = { 
-    q: query,
-    cx: CX,
-    key: KEY,
-  };
-
   console.log("Processing action /search");
   //res.send("FooBar!");
 
-  request.get({
-    url: 'https://www.googleapis.com/customsearch/v1',
-    qs: parametersObj
-  }, function(error, response, body) {
-
+  invokeCustomSearchAPI(query, function(error, response, body) {
     console.log("Invoking CustomSearch API...")
     if (error || response.statusCode !== 200) {
       console.error('ERROR!', error || body);
@@ -57,7 +47,10 @@ app.get('/search', function(req, res) {
         var link = items[0].link;
         //res.redirect(link);
         //res.set({'X-Frame-Options': 'ALL'});
-        res.send(link);
+        res.write('<p><a href=' + link + ' target="_blank">' + items[0].title + '</a></p>');
+        // TODO This is a hack - it assumes that the CustomSearch invocation will take longer to 
+        // return than the Natural Language invocation!
+        res.end();
       }
     }
   });
@@ -79,6 +72,7 @@ app.get('/search', function(req, res) {
         }
       }
       console.log("Significant entities: " + filtered);
+      res.write('<p>Significant entities: ' + filtered + '</p>');
     }
   })
 });
@@ -109,5 +103,20 @@ function invokeNaturalLanguageAPI(content, callback) {
       callback(err);
     } else
       callback(resp);
+  });
+}
+
+function invokeCustomSearchAPI(query, callback) {
+  var parametersObj = { 
+    q: query,
+    cx: CX,
+    key: KEY,
+  };
+
+  request.get({
+    url: 'https://www.googleapis.com/customsearch/v1',
+    qs: parametersObj
+  }, function(error, response, body) {
+    callback(error, response, body);
   });
 }

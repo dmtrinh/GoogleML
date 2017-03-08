@@ -11,7 +11,8 @@ function fireAction() {
     function(data) {
         //$('#results').html(data);
         //$('#results').html('<object data='+data+'/>');
-        $('#results').html('<a href=' + data + ' target="_blank">' + data + '</a>');
+        //$('#results').html('<a href=' + data + ' target="_blank">' + data + '</a>');
+        $('#results').html(data);
     });
 
     return true;
