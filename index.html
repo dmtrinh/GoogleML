@@ -1,6 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+  #main {
+      width: 100%;
+      height: 75%;
+      border: 1px solid gray;
+      float: top;
+  }
+  .customSearch {
+    width: 100%;
+    border: 1px solid gray;
+  }
+  .knowledgeGraphSearch {
+    border: 1px solid gray;
+  }
+
+  #query {
+    border-radius: 1px;
+    -webkit-box-sizing: border-box;
+    background-color: #FFF;
+    border-top: 1px solid #c0c0c0;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    color: #333;
+    display: inline-block;
+    font-size: 16px;
+    height: 29px;
+    line-height: 27px;
+    padding-left: 8px;
+    vertical-align: top;
+  }
+  input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+  }
+
+  #results {
+      width: 100%;
+      height: 25%;
+      border: 1px solid gray;
+      float: bottom;
+      margin-top: 10px;
+  }
+</style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 <script>
 function fireAction() {
@@ -22,13 +70,35 @@ function fireAction() {
 
 <body>
 <div id="main">
+  <div id="customSearch">
+    <form id="searchWF" action="/search">
+    Ask Wells Fargo:<br>
+      &nbsp;&nbsp;<input type="text" id="query" name="q" placeholder="something to inquire about" size="60"/><br/>
+      <input type="submit" id="button" value="Submit" onclick="fireAction();"/>
+    </form>
+  </div>
+  <p/>
+  <hr/>
+  <p/>
+  <div id="knowledgeGraphSearch">
+      Google Knowledge Graph Search:<br/>
+    <iframe id="knowledgeSearch_iFrame" 
+      src="https://www.gstatic.com/knowledge/kgsearch/widget/demo.html"
+      width="100%" height="450px" style="border:none">
+    </iframe>
+  </div>
 
-<form id="searchWF" action="/search">
-  Ask Wells Fargo:<br>
-  <input type="text" id="query" name="q" value=""/>
-  <input type="submit" id="button" value="Submit" onclick="fireAction();"/>
-</form>
-<br/>
+<!-- cross site - only useful if iFrame is hosted on same domain as this page
+<script>
+  var ksiFrame = document.getElementById("knowledgeSearch_iFrame");
+  console.log(ksiFrame);
+  var ksInnerDoc = ksiFrame.contentDocument ? ksiFrame.contentDocument: ksiFrame.contentWindow.document;
+  console.log(ksInnerDoc);
+  var ksWidgetControl = ksInnerDoc.getElementById("myInput");
+  console.log(ksWidgetControl);
+  ksWidgetControl.value = document.getElementById("query").value;
+</script>
+-->
 </div>
 <div id="results">
 </div>

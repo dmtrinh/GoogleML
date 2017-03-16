@@ -31,30 +31,6 @@ app.get('/search', function(req, res) {
   console.log("Processing action /search");
   //res.send("FooBar!");
 
-  invokeCustomSearchAPI(query, function(error, response, body) {
-    console.log("Invoking CustomSearch API...")
-    if (error || response.statusCode !== 200) {
-      console.error('ERROR!', error || body);
-    }
-    else {
-      var payload = JSON.parse(body);
-      var items = payload.items;
-
-      if ( items ) {
-
-        console.log("... SUCCESS!  Found " + items.length + " results.");
-        console.log("... Returning top result: " + items[0].title);
-        var link = items[0].link;
-        //res.redirect(link);
-        //res.set({'X-Frame-Options': 'ALL'});
-        res.write('<p><a href=' + link + ' target="_blank">' + items[0].title + '</a></p>');
-        // TODO This is a hack - it assumes that the CustomSearch invocation will take longer to 
-        // return than the Natural Language invocation!
-        res.end();
-      }
-    }
-  });
-
   invokeNaturalLanguageAPI(query, function(results) {
     console.log("Invoking Natural Language API...");
     if (results) {
@@ -72,9 +48,35 @@ app.get('/search', function(req, res) {
         }
       }
       console.log("Significant entities: " + filtered);
+
+      // TODO This is a hack - we are not ending the response and are assuming
+      // the Natural Language invocation will take longer to complete than the
+      // Custom Search invocation!
       res.write('<p>Significant entities: ' + filtered + '</p>');
     }
   })
+
+  invokeCustomSearchAPI(query, function(error, response, body) {
+    console.log("Invoking CustomSearch API...")
+    if (error || response.statusCode !== 200) {
+      console.error('ERROR!', error || body);
+    }
+    else {
+      var payload = JSON.parse(body);
+      var items = payload.items;
+
+      if ( items ) {
+
+        console.log("... SUCCESS!  Found " + items.length + " results.");
+        console.log("... Returning top result: " + items[0].title);
+        var link = items[0].link;
+        //res.redirect(link);
+        //res.set({'X-Frame-Options': 'ALL'});
+        res.write('<p><a href=' + link + ' target="_blank">' + items[0].title + '</a></p>');
+        res.end();
+      }
+    }
+  });
 });
 
 app.listen(PORT);
