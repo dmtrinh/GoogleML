@@ -49,7 +49,7 @@ app.get('/search', function(req, res) {
       }
       console.log("Significant entities: " + filtered);
 
-      // TODO This is a hack - we are not ending the response and are assuming
+      // FIX ME This is a hack - we are not ending the response and are assuming
       // the Natural Language invocation will take longer to complete than the
       // Custom Search invocation!
       res.write('<p>Significant entities: ' + filtered + '</p>');
